@@ -16,7 +16,9 @@ The unnecessary part of the image is cropped off, leaving only the ground, by ap
 
 ## Lane Fit
 Hopefully, the processing till now should leave an image where the pixels have a high probability of being lanes. We can then find a column wise histogram and classify the two peaks as left and right lanes. We then slice the image into uniform boxes, find mean of all the pixels in each box, classify it as a centroid and use that to realign the next sliding window. The location of the histogram peaks are chosen as a starting point for the sliding window search. Doing this easily solves the problem of finding curved lanes and improves upon Hough Transform in both speed and accuracy. The centroids from all the points are fit two a quadratic and the equation of the lane is found. This allows to extrapolate the lanes and also find the radius of curvature.
+
 ![Histogram](https://github.com/waynerobotics/vision/blob/master/media/histogram.png)
+
 ![Fit](https://github.com/waynerobotics/vision/blob/master/media/fit.png)
 
 ## Visualizing all the steps
