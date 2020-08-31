@@ -1,0 +1,21 @@
+<!--
+DESCRITPION
+-->
+<launch>
+	<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+		<param name="destination_frame" value="/base_link"/>
+		<param name="cloud_destination_topic" value="/merged_cloud"/>
+		<param name="scan_destination_topic" value="/scan_multi"/>
+        <param name="laserscan_topics" value ="/scan /laser_scan_test" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+	</node>
+</launch>
+
+<!--
+	rosrun tf static_transform_publisher 0.0 0.0 0.0 0.0 0.0 0.0 laser map 10
+	rosrun tf static_transform_publisher 0.0 0.0 0.0 0.0 0.0 0.0 map global 10
+	rosrun tf static_transform_publisher 0.0 0.0 0.0 0.0 0.0 0.0 base_link laser 10
+	rosrun rplidar_ros rplidarNodeClient
+	roslaunch rplidar_ros rplidar.launch
+	rosrun lane_laser_scan lane_laser_scan.py
+	roslaunch ira_laser_tools laserscan_multi_merger.launch
+-->

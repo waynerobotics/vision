@@ -1,0 +1,17 @@
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="map2laser" args="0.0 0.0 0.0 0.0 0.0 0.0 laser map 10"/> 
+  <node pkg="tf" type="static_transform_publisher" name="laser2baseLink" args="0.0 0.0 0.0 0.0 0.0 0.0 map global 10"/> 
+  <node pkg="tf" type="static_transform_publisher" name="laser2baseLinki" args="0.0 0.0 0.0 0.0 0.0 0.0 base_link laser 10"/> 
+  <node name="hokuyo_scan" pkg="urg_node" type="urg_node" />
+  <arg name="node_start_delay" default="2.0" />
+  <node name="lane2laser" pkg="lane_laser_scan" type="lane_laser_scan.py" />
+  <node pkg="lane_laser_scan" type="timed_roslaunch.sh" args="2 ira_laser_tools laserscan_multi_merger.launch" name="timed_roslaunch" output="screen" />
+  <node type="rviz" name="rviz" pkg="rviz_saved_conf" args="-d $(find lane_laser_scan)/rviz/merged_laser.rviz" />
+</launch>
+
+<!--
+  <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/>
+<arg name="node_start_delay" default="1.0" />  
+<node name="listener" pkg="roscpp_tutorials" type="listener" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " />
+rosrun tf static_transform_publisher 0.0 0.0 0.0 0.0 0.0 0.0 map global 10
+-->
