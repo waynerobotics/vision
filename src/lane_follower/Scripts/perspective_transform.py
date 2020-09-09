@@ -16,11 +16,16 @@ def perspective_transform(img):
 	"""
 	
 	img_size = (img.shape[1], img.shape[0])
+	# src = np.float32(
+	# 	[[115, 171], #60 -- Works for wide lane
+	# 	 [525, 177],
+	# 	 [0, 315], #20
+	# 	 [640, 315]])
 	src = np.float32(
-		[[115, 171], #60 -- IGVC World -- Aug 22
-		 [525, 177],
-		 [0, 315], #20
-		 [640, 315]])
+		[[190, 210], #60 -- First time with ribbons Sep 8
+		 [640-190, 210],
+		 [0, 480], #20
+		 [640, 480]])
 
 	dst = np.float32(
 		 [[0, 0],
@@ -38,7 +43,7 @@ def perspective_transform(img):
 
 
 if __name__ == '__main__':
-	img_file = os.path.dirname(os.path.abspath(__file__))+'/saves/2019-12-19-153614.jpg'
+	img_file = os.path.dirname(os.path.abspath(__file__))+'/saves/frame0001.jpg' #2019-12-19-153614.jpg
 
 	with open(os.path.dirname(os.path.abspath(__file__))+'/calibrate_camera.p', 'rb') as f:
 		save_dict = pickle.load(f)
@@ -61,9 +66,9 @@ if __name__ == '__main__':
 	plt.subplot(3,1,1)
 	plt.imshow(img, cmap='gray',)
 	plt.subplot(3,1,2)
-	plt.imshow(warped, cmap='gray', vmin=0, vmax=1)
-	plt.subplot(3,1,3)
 	plt.imshow(unwarped, cmap='gray', vmin=0, vmax=1)
+	plt.subplot(3,1,3)
+	plt.imshow(warped, cmap='gray', vmin=0, vmax=1)
 	fig = plt.gcf()
 	fig.set_size_inches(18.5, 10.5)
 	plt.show()

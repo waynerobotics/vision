@@ -17,7 +17,8 @@ mtx = save_dict['mtx']
 dist = save_dict['dist']
 
 #image_files = os.listdir(os.path.dirname(os.path.abspath(__file__))+"/saves/" )
-image_files=['2019-12-19-153614.jpg']
+#image_files=['2019-12-19-153614.jpg']
+image_files=['frame0001.jpg']
 for image_file in image_files:
 	out_image_file = image_file.split('.')[0] + '.png'  # write to png format
 	image_file=(os.path.dirname(os.path.abspath(__file__))+'/saves/' + image_file)
