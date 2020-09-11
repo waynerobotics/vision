@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="geotiff_map_file_path" default="$(find hector_geotiff)/maps"/>	 
+  <node name="hokuyo_scan" pkg="urg_node" type="urg_node" />
+
+  <node pkg="rviz" type="rviz" name="rviz"
+      args="-d $(find lane_follower)/launch/mapping_demo1.rviz"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="map2laser" args="0.0 0.0 0.0 0.0 0.0 0.0 laser map 10"/> 
+  <node pkg="tf" type="static_transform_publisher" name="laser2baseLink" args="0.0 0.0 0.0 0.0 0.0 0.0 map global 10"/> 
+  <node pkg="tf" type="static_transform_publisher" name="laser2baseLinki" args="0.0 0.0 0.0 0.0 0.0 0.0 base_link laser 10"/> 
+
+  <include file="$(find lane_follower)/launch/hector_mapping.launch"/>
+
+  <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch">
+    <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
+    <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/>
+  </include>  
+  
+</launch>
+
+
+<!-- 
+  <node pkg="rosbag" type="play" name="player" output="screen" args="<->-clock $(arg path)$(arg file_2)"/>
+  roslaunch car_teleop hector_slam_test.launch filename:=file_4
+	<node pkg="rosbag" type="play" name="player" output="screen" args="<->-clock $(arg path)$(arg filename_true)"/>
+<node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="1.40 0 2.23 -0.01 0.28 -0.02 /base_link velodyne 10"/>
+<include file="$(find dataspeed_dbw_gazebo)/launch/gem_q3.launch">
+  </include>
+ -->

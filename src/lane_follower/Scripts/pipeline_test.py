@@ -53,7 +53,7 @@ for image_file in image_files:
 	bottom_x_right = right_fit[0]*(bottom_y**2) + right_fit[1]*bottom_y + right_fit[2]
 	vehicle_offset = undist.shape[1]/2 - (bottom_x_left + bottom_x_right)/2
 
-	xm_per_pix = 3.7/680 # meters per pixel in x dimension
+	xm_per_pix = 2.05/490 # meters per pixel in x dimension
 	vehicle_offset *= xm_per_pix
 
 	img5 = final_viz(undist, left_fit, right_fit, m_inv, left_curve, right_curve, vehicle_offset)

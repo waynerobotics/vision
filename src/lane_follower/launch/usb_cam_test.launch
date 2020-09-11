@@ -8,5 +8,5 @@
     <param name="camera_frame_id" value="yuyv" />
     <param name="io_method" value="mmap"/>
   </node>
-  <node>
+  
 </launch>

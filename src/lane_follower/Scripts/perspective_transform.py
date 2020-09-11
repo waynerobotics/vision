@@ -23,9 +23,9 @@ def perspective_transform(img):
 	# 	 [640, 315]])
 	src = np.float32(
 		[[190, 210], #60 -- First time with ribbons Sep 8
-		 [640-190, 210],
+		 [620-190, 210],
 		 [0, 480], #20
-		 [640, 480]])
+		 [620, 480]])
 
 	dst = np.float32(
 		 [[0, 0],
