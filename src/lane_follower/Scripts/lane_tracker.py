@@ -31,6 +31,7 @@ class image_offset:
     global count
     try:
       img = self.bridge.imgmsg_to_cv2(data, desired_encoding = "bgr8")
+      
       if img.dtype == 'float32':
         img = np.array(img)*255
         img = np.uint8(img)
@@ -38,7 +39,7 @@ class image_offset:
       img = cv2.blur(img, (5,5))  
       img, _, _, _, _ = combined_thresh(img)
       #_, _, img = combined_thresh_canny(img)
-      img, _, _, _ = perspective_transform(img)
+      #img, _, _, _ = perspective_transform(img)
       cv2.imshow("Image window", img.astype(np.float32))
       count += 1
       k = cv2.waitKey(1)

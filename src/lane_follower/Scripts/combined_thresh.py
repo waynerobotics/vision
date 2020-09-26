@@ -96,43 +96,43 @@ def hls_thresh2(img):
 
 	return white_mask
 
+def hls_thresh_red(img):
+	hls = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
+	# H (OpenCV: [0 ... 180])
+	# L (OpenCV: [0 ... 255])
+	# S (OpenCV: [0 ... 255])
+	red_lower = np.array([np.round(  0 / 2), np.round(0.3 * 255), np.round(0.2* 255)])
+	red_upper = np.array([np.round(25 / 2), np.round(0.5 * 255), np.round(0.9 * 255)])
+	red_mask = cv2.inRange(hls, red_lower, red_upper)
 
-# def combined_thresh(img):
-# 	# print(type(img))
-# 	# print(img.shape)
-# 	# print(img.dtype)
+	return red_mask
+
+# def combined_thresh(img):  #WORKING for white gauges
+
 # 	abs_bin = abs_sobel_thresh(img, orient='x', thresh_min=50, thresh_max=255)
-# 	#abs_bin = cv2.dilate(abs_bin , kernel=(2,2), iterations=2)
 # 	mag_bin = mag_thresh(img, sobel_kernel=3, mag_thresh=(50, 255))
 # 	dir_bin = dir_threshold(img, sobel_kernel=15, thresh=(0.7, 1.3))
-# 	#hls_bin = hls_thresh(img, thresh=(170, 255))
 # 	hls_bin = hls_thresh2(img)
-# 	#kernel = np.ones((5,5),np.uint8)
-# 	combined = np.zeros_like(dir_bin, dtype=np.uint8)
-# 	combined[((abs_bin == 1) | ((mag_bin == 1) & (dir_bin == 1))) | (hls_bin == 1)] = 1
-# 	#combined[( (abs_bin == 1) | (mag_bin == 1) )] = 1
-# 	#combined[( (abs_bin == 1) | ((mag_bin == 1) & (dir_bin == 1)) )] = 1
-	
-# 	#combined = cv2.bitwise_and(combined,combined, mask = hls_bin)
+# 	kernel = np.ones((5,5),np.uint8)
+# 	mag_bin = cv2.dilate(mag_bin , kernel, iterations=1)
 
-# 	#print(abs_bin.dtype,mag_bin.dtype,dir_bin.dtype,combined.dtype, hls_bin.dtype)
+# 	combined = cv2.bitwise_and(mag_bin,mag_bin, mask = hls_bin)
+
 # 	return combined, abs_bin, mag_bin, dir_bin, hls_bin # DEBUG datatype
 
-def combined_thresh(img):
-
+def combined_thresh(img):  #For red guages.
 	abs_bin = abs_sobel_thresh(img, orient='x', thresh_min=50, thresh_max=255)
 	mag_bin = mag_thresh(img, sobel_kernel=3, mag_thresh=(50, 255))
 	dir_bin = dir_threshold(img, sobel_kernel=15, thresh=(0.7, 1.3))
-	hls_bin = hls_thresh2(img)
+	hls_bin = hls_thresh_red(img)
 	kernel = np.ones((5,5),np.uint8)
-	mag_bin = cv2.dilate(mag_bin , kernel, iterations=1)
-	
-	combined = cv2.bitwise_and(mag_bin,mag_bin, mask = hls_bin)
+	combined = cv2.dilate(hls_bin , kernel, iterations=1)
+	combined[combined > 0] = 1
+	# combined = cv2.bitwise_and(hls_bin,hls_bin, mask = hls_bin)
 	return combined, abs_bin, mag_bin, dir_bin, hls_bin # DEBUG datatype
 
-
 if __name__ == '__main__':
-	img_file = os.path.dirname(os.path.abspath(__file__))+'/saves/frame0001.jpg' #2019-12-19-153614.jpg
+	img_file = os.path.dirname(os.path.abspath(__file__))+'/saves/frame0001_red.jpg' #2019-12-19-153614.jpg
 	img = mpimg.imread(img_file)
 	if img.dtype == 'float32':
 		img = np.array(img)*255

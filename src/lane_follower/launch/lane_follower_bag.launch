@@ -2,9 +2,9 @@
 <launch>
   <param name="/use_sim_time" value="true"/>
   <arg name="path" default="/home/ringo/vision/bags/" />
-  <arg name="filename_true" default="straights.bag"/>
+  <arg name="filename_true" default="chicane.bag"/>
   <node pkg="rosbag" type="play" name="player" output="screen" args="--clock $(arg path)$(arg filename_true)"/>
-  <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0 _baud:=57600" name="rosserial_forwad"/>
+  <!--<node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0 _baud:=57600" name="rosserial_forwad"/>-->
 
   <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.0 0.0 0.0 0.0 map base_footprint 10"/>
   <!-- <node pkg="rviz" type="rviz" name="rviz"
@@ -14,7 +14,7 @@
   <node pkg="image_view" type="image_view" name="image_viewer" args="image:=/usb_cam1/image_raw"/>
   <node pkg="lane_follower" type="lane_follower_pid.py" name="pid_controller" output="screen"/>
 
-  <!-- <node pkg="rqt_plot" type="rqt_plot" name="offset_plot" args="/laneOffset/data /cmd_vel/angular/z"/> -->
-  <node pkg="rqt_multiplot" type="rqt_multiplot" name="velocity_plot" args="--multiplot-config $(find lane_follower)/pid_controls.xml"/>
+   <!--<node pkg="rqt_plot" type="rqt_plot" name="offset_plot" args="/laneOffset/data /cmd_vel/angular/z"/> -->
+  <node pkg="rqt_multiplot" type="rqt_multiplot" name="velocity_plot" args="--multiplot-run-all --multiplot-config $(find lane_follower)/pid_controls.xml"/>
 
 </launch>

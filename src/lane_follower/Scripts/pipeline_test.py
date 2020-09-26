@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import cv2
+from cv2 import cv2
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import pickle
@@ -18,7 +18,7 @@ dist = save_dict['dist']
 
 #image_files = os.listdir(os.path.dirname(os.path.abspath(__file__))+"/saves/" )
 #image_files=['2019-12-19-153614.jpg']
-image_files=['frame0001.jpg']
+image_files=['391_igvcw.png']
 for image_file in image_files:
 	out_image_file = image_file.split('.')[0] + '.png'  # write to png format
 	image_file=(os.path.dirname(os.path.abspath(__file__))+'/saves/' + image_file)
@@ -28,7 +28,7 @@ for image_file in image_files:
 		img = np.array(img)*255
 		img = np.uint8(img)
 	img = cv2.blur(img, (5,5))
-	img = cv2.undistort(img, mtx, dist, None, mtx)
+	#img = cv2.undistort(img, mtx, dist, None, mtx)
 	img2, abs_bin, mag_bin, dir_bin, hls_bin= combined_thresh(img)
 	#img, _, img2 = combined_thresh_canny(img)
 	img3, binary_unwarped, m, m_inv = perspective_transform(img2)

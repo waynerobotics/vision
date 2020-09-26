@@ -1,0 +1,7 @@
+Header header
+bool IMU_STATUS
+bool CAMERA_STATUS
+bool GPS_STATUS
+bool LIDAR_STATUS
+bool MOTOR_DRIVER_STATUS
+

@@ -43,7 +43,7 @@ def perspective_transform(img):
 
 
 if __name__ == '__main__':
-	img_file = os.path.dirname(os.path.abspath(__file__))+'/saves/frame0001.jpg' #2019-12-19-153614.jpg
+	img_file = os.path.dirname(os.path.abspath(__file__))+'/saves/64_igvcw.png' #2019-12-19-153614.jpg
 
 	with open(os.path.dirname(os.path.abspath(__file__))+'/calibrate_camera.p', 'rb') as f:
 		save_dict = pickle.load(f)

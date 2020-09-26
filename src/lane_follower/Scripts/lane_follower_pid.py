@@ -3,7 +3,6 @@ import rospy
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 from os import system
-from dataspeed_ulc_msgs.msg import UlcCmd
 
 previousError = -0.01 # Initiatlizing to a small amount
 integral = 0

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <node name="usb_cam1" pkg="usb_cam" type="usb_cam_node" >
-    <param name="video_device" value="/dev/video2" />
+    <param name="video_device" value="/dev/video3" />
     <param name="image_width" value="640" />
     <param name="image_height" value="480" />
     <param name="pixel_format" value="mjpeg" />
@@ -18,7 +18,7 @@
   <node pkg="image_view" type="image_view" name="image_viewer" args="image:=/usb_cam1/image_raw"/>
 
   <!-- <node pkg="rqt_plot" type="rqt_plot" name="offset_plot" args="/laneOffset/data /cmd_vel/angular/z"/> -->
-  <node pkg="rqt_multiplot" type="rqt_multiplot" name="velocity_plot" args="--multiplot-config $(find lane_follower)/pid_controls.xml"/>
+  <node pkg="rqt_multiplot" type="rqt_multiplot" name="velocity_plot" args="--multiplot-run-all --multiplot-config $(find lane_follower)/pid_controls.xml"/>
 
 </launch>
   <!-- rosrun rosserial_python serial_node.py /dev/ttyUSB0 -->
