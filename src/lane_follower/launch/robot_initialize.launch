@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- DRIVE SYSTEM ARDUINO NANO-->
-  <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyACM0 _baud:=57600" name="rosserial_forwad"/>
+  <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0 _baud:=57600" name="rosserial_forwad"/>
   
   <!-- CAMERA -->
   <node name="usb_cam1" pkg="usb_cam" type="usb_cam_node" >
@@ -13,7 +13,9 @@
     <param name="io_method" value="mmap"/>
   </node>
   
-  <!-- LIDAR <node name="hokuyo_scan" pkg="urg_node" type="urg_node" />-->
+  <!-- LIDAR -->
+  <!-- <node name="hokuyo_scan" pkg="urg_node" type="urg_node" /> -->
   
+  <node name="status_publisher" pkg="lane_follower" type="status.py" output="screen" />
 
 </launch>
