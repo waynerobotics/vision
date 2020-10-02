@@ -28,10 +28,9 @@ class status:
         self.pub.publish(self.reporter)
         self.led_pub.publish(self.status_string)
 
-        #self.arduino_handshake = rospy.Subscriber("arduino_nano_handshake", Bool, self.arduino_nano)
+        self.arduino_handshake = rospy.Subscriber("arduino_nano_handshake", Bool, self.arduino_nano)
         self.camera = rospy.Subscriber("/usb_cam1/image_raw", Image, self.camera_status)
         #self.lidar = rospy.Subscriber("/scan", LaserScan, self.lidar_status)
-        
 
     def camera_status(self, msg):
         self.reporter.CAMERA_STATUS = True
@@ -39,19 +38,33 @@ class status:
 
         self.pub.publish(self.reporter)
         self.led_pub.publish(self.status_string)
+
+        #IMU, LIDAR, GPS Simulator -- REMOVE block when physical testing
+        rospy.sleep(2.5)
+        self.status_string.data = self.status_string.data[:imu] + "1" + self.status_string.data[imu+1:]
+        self.led_pub.publish(self.status_string)
+        rospy.sleep(2)
+        self.status_string.data = self.status_string.data[:lidar] + "1" + self.status_string.data[lidar+1:]
+        self.led_pub.publish(self.status_string)
+        rospy.sleep(1)
+        self.status_string.data = self.status_string.data[:gps] + "1" + self.status_string.data[gps+1:]
+        self.led_pub.publish(self.status_string)
+        rospy.sleep(1)
+        self.status_string.data = self.status_string.data[:driver] + "1" + self.status_string.data[driver+1:]
+        self.led_pub.publish(self.status_string)
         
 
     def arduino_nano(self, msg):
         if(msg.data) == True:
             self.reporter.MOTOR_DRIVER_STATUS = True
-            self.status_string = self.status_string.data[:driver] + "1" + self.status_string.data[driver+1:]
+            self.status_string.data = self.status_string.data[:driver] + "1" + self.status_string.data[driver+1:]
         
         self.pub.publish(self.reporter)
         self.led_pub.publish(self.status_string)
 
     def lidar_status(self, msg):
         self.reporter.LIDAR_STATUS = True
-        self.status_string = self.status_string.data[:lidar] + "1" + self.status_string.data[lidar+1:]
+        self.status_string.data = self.status_string.data[:lidar] + "1" + self.status_string.data[lidar+1:]
 
         self.pub.publish(self.reporter)   
         self.led_pub.publish(self.status_string)

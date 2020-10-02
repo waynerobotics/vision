@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <!-- DRIVE SYSTEM ARDUINO NANO-->
-  <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0 _baud:=57600" name="rosserial_forwad"/>
+  <!-- <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0 _baud:=57600" name="rosserial_forwad"/> -->
+
+  <!-- LED INDICATOR STRIP NANO-->
+  <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0 _baud:=57600" name="rosserial_forwad_led"/>
   
   <!-- CAMERA -->
   <node name="usb_cam1" pkg="usb_cam" type="usb_cam_node" >
